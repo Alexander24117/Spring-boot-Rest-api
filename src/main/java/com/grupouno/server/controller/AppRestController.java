@@ -27,7 +27,50 @@ public class AppRestController {
         this.especieRepository = especieRepository;
         this.personajeRepository = personajeRepository;
     }
-
+    @GetMapping(value = "/info", produces= MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String getApi(){
+        return "Lists: " +
+                "\n" +
+                "\n" +
+                "jugadores: https://bi-app-postgress.herokuapp.com/app/api/jugadores" +
+                "\n" +
+                "especies: https://bi-app-postgress.herokuapp.com/app/api/especies" +
+                "\n" +
+                "personajes: https://bi-app-postgress.herokuapp.com/app/api/personajes" +
+                "\n" +
+                "\n" +
+                "Gets: "+
+                "\n" +
+                "\n" +
+                "jugadores: https://bi-app-postgress.herokuapp.com/app/api/jugador/" +
+                "\n" +
+                "especies: https://bi-app-postgress.herokuapp.com/app/api/especie/" +
+                "\n" +
+                "personajes: https://bi-app-postgress.herokuapp.com/app/api/personaje/" +
+                "\n" +
+                "\n" +
+                "Updates:   " +
+                "\n" +
+                "\n" +
+                "jugadores: https://bi-app-postgress.herokuapp.com/app/api/personaje/update/" +
+                "\n" +
+                "especies: https://bi-app-postgress.herokuapp.com/app/api/especie/update/" +
+                "\n" +
+                "personajes: https://bi-app-postgress.herokuapp.com/app/api/personaje/update/" +
+                "\n" +
+                "\n" +
+                "Deletes:   " +
+                "\n" +
+                "\n" +
+                "jugadores: https://bi-app-postgress.herokuapp.com/app/api/jugador/delete/" +
+                "\n" +
+                "especies: https://bi-app-postgress.herokuapp.com/app/api/especie/delete/" +
+                "\n" +
+                "personajes: https://bi-app-postgress.herokuapp.com/app/api/personaje/delete/" +
+                "\n" +
+                "\n";
+    }
     @GetMapping("/jugadores")
     public List<Jugador> allJugador() {
         return jugadorRepository.findAll();
@@ -85,7 +128,7 @@ public class AppRestController {
         return new ResponseEntity<>(especieRepository.save(especie), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/jugador/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/jugador/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Jugador> updateJugador(@RequestBody Jugador newJugador, @PathVariable String id) {
         if (jugadorRepository.existsById(id)) {
             return new ResponseEntity<>(jugadorRepository.findById(id)
@@ -101,7 +144,7 @@ public class AppRestController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Jugador not found");
     }
 
-    @PutMapping(value = "/especie/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/especie/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Especie> updateEspecie(@RequestBody Especie newEspecie, @PathVariable String id) {
         if (especieRepository.existsById(id)) {
             return new ResponseEntity<>(especieRepository.findById(id)
@@ -115,7 +158,7 @@ public class AppRestController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Especie not found");
     }
 
-    @PutMapping(value = "/personaje/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/personaje/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Personaje> updatePersonaje(@RequestBody Personaje newPersonaje, @PathVariable String id) {
         if (personajeRepository.existsById(id)) {
             return new ResponseEntity<>(personajeRepository.findById(id)
