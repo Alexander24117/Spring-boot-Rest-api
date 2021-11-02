@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api")
 public class AppRestController {
     private final JugadorRepository jugadorRepository;
