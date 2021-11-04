@@ -88,7 +88,7 @@ public class AppRestController {
     }
 
     @GetMapping(value = "/jugador/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Jugador> getJugador(@RequestParam String id) {
+    public ResponseEntity<Jugador> getJugador(@PathVariable String id) {
         Boolean sa = jugadorRepository.existsById(id);
         if (jugadorRepository.existsById(id)) {
 
