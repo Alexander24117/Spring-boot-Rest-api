@@ -70,6 +70,16 @@ public class AppRestController {
                 "\n" +
                 "personajes: https://bi-app-postgress.herokuapp.com/app/api/personaje/delete/" +
                 "\n" +
+                "\n"+
+                "insert:   " +
+                "\n" +
+                "\n" +
+                "jugadores: https://bi-app-postgress.herokuapp.com/app/api/jugador/" +
+                "\n" +
+                "especies: https://bi-app-postgress.herokuapp.com/app/api/especie/" +
+                "\n" +
+                "personajes: https://bi-app-postgress.herokuapp.com/app/api/personaje/" +
+                "\n" +
                 "\n";
     }
     @GetMapping("/jugadores")
