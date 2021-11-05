@@ -134,7 +134,7 @@ public class AppRestController {
     }
 
     @PostMapping(value ="/personaje", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Personaje> newEspecie(@RequestBody Personaje personaje) {
+    public ResponseEntity<Personaje> newPersonaje(@RequestBody Personaje personaje) {
         LocalDate modf = LocalDate.now();
        // personaje.setFechaModificacion(modf);
         personaje.setEstadoRegistro(new BigDecimal(1));
