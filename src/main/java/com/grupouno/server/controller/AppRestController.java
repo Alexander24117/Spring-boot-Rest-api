@@ -128,16 +128,21 @@ public class AppRestController {
 
     @PostMapping(value = "/jugador", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Jugador> newJugador(@RequestBody Jugador jugador) {
+        System.out.println(jugador.getFechaModificacion());
+        System.out.println(jugador.getEstadoRegistro());
         LocalDate modf = LocalDate.now();
         jugador.setEstadoRegistro(new BigDecimal(1));
-        jugador.setFechaModificacion(modf);
+        if(jugador.getFechaModificacion()==null){
+            jugador.setFechaModificacion(modf);
+        }
+
         return new ResponseEntity<>(jugadorRepository.save(jugador), HttpStatus.CREATED);
     }
 
     @PostMapping(value ="/personaje", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Personaje> newEspecie(@RequestBody Personaje personaje) {
         LocalDate modf = LocalDate.now();
-        personaje.setFechaModificacion(modf);
+       // personaje.setFechaModificacion(modf);
         personaje.setEstadoRegistro(new BigDecimal(1));
         return new ResponseEntity<>(personajeRepository.save(personaje), HttpStatus.CREATED);
     }
@@ -145,7 +150,7 @@ public class AppRestController {
     @PostMapping(value = "/especie", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Especie> newEspecie(@RequestBody Especie especie) {
         LocalDate modf = LocalDate.now();
-        especie.setFechaModificacion(modf);
+        //especie.setFechaModificacion(modf);
         especie.setEstadoRegistro(new BigDecimal(1));
         return new ResponseEntity<>(especieRepository.save(especie), HttpStatus.CREATED);
     }

@@ -1,5 +1,6 @@
 package com.grupouno.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.ToString;
 
 import javax.persistence.Column;
@@ -24,6 +25,7 @@ public class Especie {
     private BigDecimal estadoRegistro;
 
     @Column(name = "fecha_modificacion", nullable = false)
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     private LocalDate fechaModificacion;
 
 
