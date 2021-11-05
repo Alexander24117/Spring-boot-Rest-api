@@ -36,7 +36,7 @@ public class Jugador {
     private BigDecimal estadoRegistro;
 
     @Column(name = "fecha_modificacion", nullable = false)
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDate fechaModificacion;
 
     @OneToMany(mappedBy="jugador",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
