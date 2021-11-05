@@ -5,7 +5,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +15,7 @@ import java.util.List;
 })
 @Entity
 @ToString
+
 public class Jugador {
     @Id
     @Column(name = "id", nullable = false, length = 20)
@@ -36,13 +37,13 @@ public class Jugador {
     private BigDecimal estadoRegistro;
 
     @Column(name = "fecha_modificacion", nullable = false)
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDateTime fechaModificacion;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechaModificacion;
 
     @OneToMany(mappedBy="jugador",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
     private List<Personaje> personajes = new ArrayList<>();
 
-    public Jugador(String id, String cuenta, String contrasena, String apodo, String email, BigDecimal estadoRegistro, LocalDateTime fechaModificacion, List<Personaje> personajes) {
+    public Jugador(String id, String cuenta, String contrasena, String apodo, String email, BigDecimal estadoRegistro, LocalDate fechaModificacion, List<Personaje> personajes) {
         this.id = id;
         this.cuenta = cuenta;
         this.contrasena = contrasena;
@@ -84,11 +85,11 @@ public class Jugador {
         return estadoRegistro;
     }
 
-    public LocalDateTime getFechaModificacion() {
+    public LocalDate getFechaModificacion() {
         return fechaModificacion;
     }
 
-    public void setFechaModificacion(LocalDateTime fechaModificacion) {
+    public void setFechaModificacion(LocalDate fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
     }
 

@@ -130,6 +130,7 @@ public class AppRestController {
     public ResponseEntity<Jugador> newJugador(@RequestBody Jugador jugador) {
 
         jugador.setEstadoRegistro(new BigDecimal(1));
+       // jugador.setFechaModificacion(LocalDate.now());
         return new ResponseEntity<>(jugadorRepository.save(jugador), HttpStatus.CREATED);
     }
 
@@ -158,7 +159,7 @@ public class AppRestController {
                         jugador.setCuenta(newJugador.getCuenta());
                         jugador.setContrasena(newJugador.getContrasena());
                         jugador.setEstadoRegistro(BigDecimal.valueOf(1));
-                        jugador.setFechaModificacion(LocalDateTime.now());
+                        jugador.setFechaModificacion(LocalDate.now());
                         return jugadorRepository.save(jugador);
                     }).get(), HttpStatus.OK);
         }
