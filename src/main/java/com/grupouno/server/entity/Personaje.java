@@ -5,7 +5,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Table(name = "personaje", indexes = {
         @Index(name = "uk_personaje_nombre", columnList = "nombre", unique = true)
@@ -42,9 +42,9 @@ public class Personaje {
 
     @Column(name = "fecha_modificacion", nullable = false)
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDateTime fechaModificacion;
+    private LocalDate fechaModificacion;
 
-    public Personaje(String id, String nombre, BigDecimal fuerza, BigDecimal mana, BigDecimal energia, Especie especie, Jugador jugador, BigDecimal estadoRegistro, LocalDateTime fechaModificacion) {
+    public Personaje(String id, String nombre, BigDecimal fuerza, BigDecimal mana, BigDecimal energia, Especie especie, Jugador jugador, BigDecimal estadoRegistro, LocalDate fechaModificacion) {
         this.id = id;
         this.nombre = nombre;
         this.fuerza = fuerza;
@@ -95,11 +95,11 @@ public class Personaje {
         return estadoRegistro;
     }
 
-    public LocalDateTime getFechaModificacion() {
+    public LocalDate getFechaModificacion() {
         return fechaModificacion;
     }
 
-    public void setFechaModificacion(LocalDateTime fechaModificacion) {
+    public void setFechaModificacion(LocalDate fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
     }
 

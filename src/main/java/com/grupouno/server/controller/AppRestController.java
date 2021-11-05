@@ -14,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -173,7 +172,7 @@ public class AppRestController {
                     .map(especie -> {
                         especie.setNombre(newEspecie.getNombre());
                         especie.setEstadoRegistro(BigDecimal.valueOf(1));
-                        especie.setFechaModificacion(LocalDateTime.now());
+                        especie.setFechaModificacion(LocalDate.now());
                         return especieRepository.save(especie);
                     }).get(), HttpStatus.OK);
         }
@@ -189,7 +188,7 @@ public class AppRestController {
                         personaje.setFuerza(newPersonaje.getFuerza());
                         personaje.setMana(newPersonaje.getMana());
                         personaje.setEnergia(newPersonaje.getEnergia());
-                        personaje.setFechaModificacion(LocalDateTime.now());
+                        personaje.setFechaModificacion(LocalDate.now());
                         return personajeRepository.save(personaje);
                     }).get(), HttpStatus.OK);
         }

@@ -2,15 +2,13 @@ package com.grupouno.server.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "especie")
@@ -28,7 +26,7 @@ public class Especie {
 
     @Column(name = "fecha_modificacion", nullable = false)
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDateTime fechaModificacion;
+    private LocalDate fechaModificacion;
 
 
     public String getId() {
@@ -43,14 +41,14 @@ public class Especie {
         return estadoRegistro;
     }
 
-    public LocalDateTime getFechaModificacion() {
+    public LocalDate getFechaModificacion() {
         return fechaModificacion;
     }
 
     public Especie() {
     }
 
-    public Especie(String id, String nombre, BigDecimal estadoRegistro, LocalDateTime fechaModificacion) {
+    public Especie(String id, String nombre, BigDecimal estadoRegistro, LocalDate fechaModificacion) {
         this.id = id;
         this.nombre = nombre;
         this.estadoRegistro = estadoRegistro;
@@ -63,7 +61,7 @@ public class Especie {
 
 
 
-    public void setFechaModificacion(LocalDateTime fechaModificacion) {
+    public void setFechaModificacion(LocalDate fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
     }
 
