@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.Temporal;
 import java.util.List;
 
 @RestController
@@ -126,6 +128,8 @@ public class AppRestController {
 
     @PostMapping(value = "/jugador", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Jugador> newJugador(@RequestBody Jugador jugador) {
+        LocalDate modf = LocalDate.now();
+        jugador.setFechaModificacion(modf);
         return new ResponseEntity<>(jugadorRepository.save(jugador), HttpStatus.CREATED);
     }
 
