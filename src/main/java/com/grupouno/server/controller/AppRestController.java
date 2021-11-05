@@ -135,11 +135,15 @@ public class AppRestController {
 
     @PostMapping(value ="/personaje", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Personaje> newEspecie(@RequestBody Personaje personaje) {
+        LocalDate modf = LocalDate.now();
+        personaje.setFechaModificacion(modf);
         return new ResponseEntity<>(personajeRepository.save(personaje), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/especie", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Especie> newEspecie(@RequestBody Especie especie) {
+        LocalDate modf = LocalDate.now();
+        especie.setFechaModificacion(modf);
         return new ResponseEntity<>(especieRepository.save(especie), HttpStatus.CREATED);
     }
 
@@ -152,7 +156,7 @@ public class AppRestController {
                         jugador.setCuenta(newJugador.getCuenta());
                         jugador.setContrasena(newJugador.getContrasena());
                         jugador.setEstadoRegistro(BigDecimal.valueOf(1));
-                        jugador.setFechaModificacion(newJugador.getFechaModificacion());
+                        jugador.setFechaModificacion(LocalDate.now());
                         return jugadorRepository.save(jugador);
                     }).get(), HttpStatus.OK);
         }
@@ -166,7 +170,7 @@ public class AppRestController {
                     .map(especie -> {
                         especie.setNombre(newEspecie.getNombre());
                         especie.setEstadoRegistro(BigDecimal.valueOf(1));
-                        especie.setFechaModificacion(newEspecie.getFechaModificacion());
+                        especie.setFechaModificacion(LocalDate.now());
                         return especieRepository.save(especie);
                     }).get(), HttpStatus.OK);
         }
@@ -182,7 +186,7 @@ public class AppRestController {
                         personaje.setFuerza(newPersonaje.getFuerza());
                         personaje.setMana(newPersonaje.getMana());
                         personaje.setEnergia(newPersonaje.getEnergia());
-                        personaje.setFechaModificacion(newPersonaje.getFechaModificacion());
+                        personaje.setFechaModificacion(LocalDate.now());
                         return personajeRepository.save(personaje);
                     }).get(), HttpStatus.OK);
         }
