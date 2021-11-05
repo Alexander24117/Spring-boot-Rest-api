@@ -41,7 +41,7 @@ public class Personaje {
     private BigDecimal estadoRegistro;
 
     @Column(name = "fecha_modificacion", nullable = false)
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaModificacion;
 
     public Personaje(String id, String nombre, BigDecimal fuerza, BigDecimal mana, BigDecimal energia, Especie especie, Jugador jugador, BigDecimal estadoRegistro, LocalDate fechaModificacion) {
