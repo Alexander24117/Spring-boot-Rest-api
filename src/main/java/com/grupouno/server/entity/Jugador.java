@@ -40,7 +40,7 @@ public class Jugador {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaModificacion;
 
-    @OneToMany(mappedBy="jugador",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="jugador",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
     private List<Personaje> personajes = new ArrayList<>();
 
     public Jugador(String id, String cuenta, String contrasena, String apodo, String email, BigDecimal estadoRegistro, LocalDate fechaModificacion, List<Personaje> personajes) {
