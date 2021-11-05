@@ -128,14 +128,8 @@ public class AppRestController {
 
     @PostMapping(value = "/jugador", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Jugador> newJugador(@RequestBody Jugador jugador) {
-        System.out.println(jugador.getFechaModificacion());
-        System.out.println(jugador.getEstadoRegistro());
-        LocalDateTime modf = LocalDateTime.now();
-        jugador.setEstadoRegistro(new BigDecimal(1));
-        if(jugador.getFechaModificacion()==null){
-            jugador.setFechaModificacion(modf);
-        }
 
+        jugador.setEstadoRegistro(new BigDecimal(1));
         return new ResponseEntity<>(jugadorRepository.save(jugador), HttpStatus.CREATED);
     }
 
