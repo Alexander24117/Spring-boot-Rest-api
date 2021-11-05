@@ -138,6 +138,8 @@ public class AppRestController {
         LocalDate modf = LocalDate.now();
        // personaje.setFechaModificacion(modf);
         personaje.setEstadoRegistro(new BigDecimal(1));
+        personaje.getEspecie().setEstadoRegistro(new BigDecimal(1));
+        personaje.getJugador().setEstadoRegistro(new BigDecimal(1));
         return new ResponseEntity<>(personajeRepository.save(personaje), HttpStatus.CREATED);
     }
 
