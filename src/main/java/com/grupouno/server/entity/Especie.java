@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "especie")
@@ -26,7 +26,7 @@ public class Especie {
 
     @Column(name = "fecha_modificacion", nullable = false)
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate fechaModificacion;
+    private LocalDateTime fechaModificacion;
 
 
     public String getId() {
@@ -41,14 +41,14 @@ public class Especie {
         return estadoRegistro;
     }
 
-    public LocalDate getFechaModificacion() {
+    public LocalDateTime getFechaModificacion() {
         return fechaModificacion;
     }
 
     public Especie() {
     }
 
-    public Especie(String id, String nombre, BigDecimal estadoRegistro, LocalDate fechaModificacion) {
+    public Especie(String id, String nombre, BigDecimal estadoRegistro, LocalDateTime fechaModificacion) {
         this.id = id;
         this.nombre = nombre;
         this.estadoRegistro = estadoRegistro;
@@ -61,7 +61,7 @@ public class Especie {
 
 
 
-    public void setFechaModificacion(LocalDate fechaModificacion) {
+    public void setFechaModificacion(LocalDateTime fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
     }
 

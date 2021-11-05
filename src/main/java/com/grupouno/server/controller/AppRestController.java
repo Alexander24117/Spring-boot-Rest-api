@@ -14,7 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.temporal.Temporal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -130,7 +130,7 @@ public class AppRestController {
     public ResponseEntity<Jugador> newJugador(@RequestBody Jugador jugador) {
         System.out.println(jugador.getFechaModificacion());
         System.out.println(jugador.getEstadoRegistro());
-        LocalDate modf = LocalDate.now();
+        LocalDateTime modf = LocalDateTime.now();
         jugador.setEstadoRegistro(new BigDecimal(1));
         if(jugador.getFechaModificacion()==null){
             jugador.setFechaModificacion(modf);
@@ -164,7 +164,7 @@ public class AppRestController {
                         jugador.setCuenta(newJugador.getCuenta());
                         jugador.setContrasena(newJugador.getContrasena());
                         jugador.setEstadoRegistro(BigDecimal.valueOf(1));
-                        jugador.setFechaModificacion(LocalDate.now());
+                        jugador.setFechaModificacion(LocalDateTime.now());
                         return jugadorRepository.save(jugador);
                     }).get(), HttpStatus.OK);
         }
@@ -178,7 +178,7 @@ public class AppRestController {
                     .map(especie -> {
                         especie.setNombre(newEspecie.getNombre());
                         especie.setEstadoRegistro(BigDecimal.valueOf(1));
-                        especie.setFechaModificacion(LocalDate.now());
+                        especie.setFechaModificacion(LocalDateTime.now());
                         return especieRepository.save(especie);
                     }).get(), HttpStatus.OK);
         }
@@ -194,7 +194,7 @@ public class AppRestController {
                         personaje.setFuerza(newPersonaje.getFuerza());
                         personaje.setMana(newPersonaje.getMana());
                         personaje.setEnergia(newPersonaje.getEnergia());
-                        personaje.setFechaModificacion(LocalDate.now());
+                        personaje.setFechaModificacion(LocalDateTime.now());
                         return personajeRepository.save(personaje);
                     }).get(), HttpStatus.OK);
         }
