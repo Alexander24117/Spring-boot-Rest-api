@@ -1,37 +1,30 @@
 package com.grupouno.server.controller;
 
 import com.grupouno.server.entity.Especie;
-import com.grupouno.server.entity.Jugador;
 import com.grupouno.server.entity.Personaje;
-import com.grupouno.server.repository.EspecieRepository;
-import com.grupouno.server.repository.JugadorRepository;
-import com.grupouno.server.repository.PersonajeRepository;
-import org.springframework.http.HttpStatus;
+import com.grupouno.server.entity.Jugador;
+import com.grupouno.server.services.EspecieService;
+import com.grupouno.server.services.JugadorService;
+import com.grupouno.server.services.PersonajeService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api")
+@AllArgsConstructor
 public class AppRestController {
-    private final JugadorRepository jugadorRepository;
-    private final EspecieRepository especieRepository;
-    private final PersonajeRepository personajeRepository;
+    private final JugadorService jugadorService;
+    private final EspecieService especieService;
+    private final PersonajeService personajeService;
 
-    public AppRestController(JugadorRepository jugadorRepository, EspecieRepository especieRepository, PersonajeRepository personajeRepository) {
-        this.jugadorRepository = jugadorRepository;
-        this.especieRepository = especieRepository;
-        this.personajeRepository = personajeRepository;
-    }
-    @GetMapping(value = "/info", produces= MediaType.APPLICATION_JSON_VALUE)
+
+    @GetMapping(value = "/info", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String getApi(){
+    public String getApi() {
         return "Lists: " +
                 "\n" +
                 "\n" +
@@ -42,7 +35,7 @@ public class AppRestController {
                 "personajes: https://bi-app-postgress.herokuapp.com/app/api/personajes" +
                 "\n" +
                 "\n" +
-                "Gets: "+
+                "Gets: " +
                 "\n" +
                 "\n" +
                 "jugadores: https://bi-app-postgress.herokuapp.com/app/api/jugador/" +
@@ -71,7 +64,7 @@ public class AppRestController {
                 "\n" +
                 "personajes: https://bi-app-postgress.herokuapp.com/app/api/personaje/delete/" +
                 "\n" +
-                "\n"+
+                "\n" +
                 "insert:   " +
                 "\n" +
                 "\n" +
@@ -83,146 +76,80 @@ public class AppRestController {
                 "\n" +
                 "\n";
     }
+
     @GetMapping("/jugadores")
     public List<Jugador> allJugador() {
-        return jugadorRepository.findAll();
+        return jugadorService.getJugadores();
     }
 
     @GetMapping("/especies")
     public List<Especie> allEspecie() {
-        return especieRepository.findAll();
+        return especieService.getEspecies();
     }
 
     @GetMapping("/personajes")
     public List<Personaje> allPersonajes() {
-        return personajeRepository.findAll();
+        return personajeService.getPersonajes();
     }
 
     @GetMapping(value = "/jugador/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Jugador> getJugador(@PathVariable String id) {
-        Boolean sa = jugadorRepository.existsById(id);
-        if (jugadorRepository.existsById(id)) {
-
-            return new ResponseEntity<>(jugadorRepository.findById(id).get(), HttpStatus.OK);
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Jugador not found "+ id);
+        return jugadorService.getJugador(id);
     }
 
     @GetMapping(value = "/personaje/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Personaje> getPersonaje(@PathVariable String id) {
-        if (personajeRepository.existsById(id)) {
-            return new ResponseEntity<>(personajeRepository.findById(id).get(), HttpStatus.OK);
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Personaje not found");
+        return personajeService.getPersonaje(id);
     }
 
     @GetMapping(value = "/especie/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Especie> getEspecie(@PathVariable String id) {
-        if (especieRepository.existsById(id)) {
-            return new ResponseEntity<>(especieRepository.findById(id).get(), HttpStatus.OK);
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Especie not found");
+        return especieService.getEspecie(id);
     }
 
 
     @PostMapping(value = "/jugador", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Jugador> newJugador(@RequestBody Jugador jugador) {
-
-        jugador.setEstadoRegistro(new BigDecimal(1));
-       // jugador.setFechaModificacion(LocalDate.now());
-        return new ResponseEntity<>(jugadorRepository.save(jugador), HttpStatus.CREATED);
+        return jugadorService.createJugador(jugador);
     }
 
-    @PostMapping(value ="/personaje", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/personaje", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Personaje> newPersonaje(@RequestBody Personaje personaje) {
-        LocalDate modf = LocalDate.now();
-       // personaje.setFechaModificacion(modf);
-        personaje.setEstadoRegistro(new BigDecimal(1));
-        personaje.getEspecie().setEstadoRegistro(new BigDecimal(1));
-        personaje.getJugador().setEstadoRegistro(new BigDecimal(1));
-        return new ResponseEntity<>(personajeRepository.save(personaje), HttpStatus.CREATED);
+        return personajeService.createPersonaje(personaje);
     }
 
     @PostMapping(value = "/especie", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Especie> newEspecie(@RequestBody Especie especie) {
-        LocalDate modf = LocalDate.now();
-        //especie.setFechaModificacion(modf);
-        especie.setEstadoRegistro(new BigDecimal(1));
-        return new ResponseEntity<>(especieRepository.save(especie), HttpStatus.CREATED);
+        return especieService.createEspecie(especie);
     }
 
     @PutMapping(value = "/jugador/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Jugador> updateJugador(@RequestBody Jugador newJugador, @PathVariable String id) {
-        if (jugadorRepository.existsById(id)) {
-            return new ResponseEntity<>(jugadorRepository.findById(id)
-                    .map(jugador -> {
-                        jugador.setApodo(newJugador.getApodo());
-                        jugador.setCuenta(newJugador.getCuenta());
-                        jugador.setContrasena(newJugador.getContrasena());
-                        jugador.setEstadoRegistro(BigDecimal.valueOf(1));
-                        jugador.setFechaModificacion(LocalDate.now());
-                        return jugadorRepository.save(jugador);
-                    }).get(), HttpStatus.OK);
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Jugador not found");
+        return jugadorService.updateJugador(id, newJugador);
     }
 
     @PutMapping(value = "/especie/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Especie> updateEspecie(@RequestBody Especie newEspecie, @PathVariable String id) {
-        if (especieRepository.existsById(id)) {
-            return new ResponseEntity<>(especieRepository.findById(id)
-                    .map(especie -> {
-                        especie.setNombre(newEspecie.getNombre());
-                        especie.setEstadoRegistro(BigDecimal.valueOf(1));
-                        especie.setFechaModificacion(LocalDate.now());
-                        return especieRepository.save(especie);
-                    }).get(), HttpStatus.OK);
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Especie not found");
+        return especieService.updateEspecie(id, newEspecie);
     }
 
     @PutMapping(value = "/personaje/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Personaje> updatePersonaje(@RequestBody Personaje newPersonaje, @PathVariable String id) {
-        if (personajeRepository.existsById(id)) {
-            return new ResponseEntity<>(personajeRepository.findById(id)
-                    .map(personaje -> {
-                        personaje.setNombre(newPersonaje.getNombre());
-                        personaje.setFuerza(newPersonaje.getFuerza());
-                        personaje.setMana(newPersonaje.getMana());
-                        personaje.setEnergia(newPersonaje.getEnergia());
-                        personaje.setFechaModificacion(LocalDate.now());
-                        return personajeRepository.save(personaje);
-                    }).get(), HttpStatus.OK);
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Personaje not found");
+        return personajeService.updatePersonaje(id, newPersonaje);
     }
 
     @DeleteMapping("/jugador/delete/{id}")
     public ResponseEntity<Jugador> deleteJugador(@PathVariable String id) {
-        boolean existsJugadorById = jugadorRepository.existsById(id);
-        if (existsJugadorById) {
-            jugadorRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Jugador not found");
+        return jugadorService.deleteJugador(id);
     }
 
     @DeleteMapping("/personaje/delete/{id}")
     public ResponseEntity<Personaje> deletePersonaje(@PathVariable String id) {
-        boolean existsJugadorById = personajeRepository.existsById(id);
-        if (existsJugadorById) {
-            personajeRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Personaje not found");
+        return personajeService.deletePersonaje(id);
     }
+
     @DeleteMapping("/especie/delete/{id}")
     public ResponseEntity<Especie> deleteEspecie(@PathVariable String id) {
-        boolean existsJugadorById = especieRepository.existsById(id);
-        if (existsJugadorById) {
-            especieRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Personaje not found");
+        return especieService.deleteEspecie(id);
     }
 }
