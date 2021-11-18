@@ -48,7 +48,7 @@ public class AppRestController {
                 "Updates:   " +
                 "\n" +
                 "\n" +
-                "jugadores: https://bi-app-postgress.herokuapp.com/app/api/personaje/update/" +
+                "jugadores: https://bi-app-postgress.herokuapp.com/app/api/jugadores/update/" +
                 "\n" +
                 "especies: https://bi-app-postgress.herokuapp.com/app/api/especie/update/" +
                 "\n" +
